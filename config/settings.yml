@@ -1,0 +1,7 @@
+plugins:
+  link_to_jira_plugin_enabled:
+    default: true
+    client: true
+  link_to_jira_plugin_list:
+    default: JCAT|MJE
+    client: true

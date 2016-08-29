@@ -1,0 +1,4 @@
+es:
+  site_settings:
+    link_to_jira_plugin_enabled: '¿Habilitar plugin Link to jira?'
+    link_to_jira_plugin_list: 'Lista de link to jira.'

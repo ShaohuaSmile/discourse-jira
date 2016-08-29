@@ -1,0 +1,4 @@
+en:
+  site_settings:
+    link_to_jira_plugin_enabled: 'Enable discourse-jira plugin globally?'
+    link_to_jira_plugin_list: 'jira projects list.'
