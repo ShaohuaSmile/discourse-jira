@@ -1,26 +1,46 @@
 (function() {
     if (Discourse.dialect_deprecated) { return; }
     
-    function abbreviate(text) {
+    function link_to_jira(text) {
+		
         var siteSettings = Discourse.SiteSettings;
 
-        if (siteSettings.abbreviations_plugin_enabled) {
-        var list = siteSettings.abbreviations_plugin_list;
+        if (siteSettings.link_to_jira_plugin_enabled) {
+        var list = siteSettings.link_to_jira_plugin_list;
 
-        var abbreviationCouples = list.split("|").map(function(couple) {
-            return couple.split(":");
-        });
-
-        abbreviationCouples.forEach(function(couple) {
-            //required a space either before or after the acronym
-            text = text.replace(new RegExp("\\b((\\s)" + couple[0] + "|" + couple[0] + "(?=\\s))\\b","g"), '$2<abbr title="' + couple[1] + '">'+ couple[0] +'</abbr>');
-        });
+        var link_to_jira_projects = list.split("|");
+        var link_to_jira_issues = new Array(0);
+        for(var i=0; i < link_to_jira_projects.length; i++){
+		 //HHHHHJCAT-1234CCCCCC
+			var matchKey = link_to_jira_projects[i] + "-";
+			findIssue(link_to_jira_issues,text,matchKey,0);
+		}
+		for(var i=0; i < link_to_jira_issues.length; i++){
+		 text = text.replace(link_to_jira_issues[i], '<a href="' +'https://plf-jira.rnd.ki.sw.ericsson.se/browse/'+ link_to_jira_issues[i] + '">'+ link_to_jira_issues[i] +'</a>');
+		} 
         }
     return text;
     }
-    
+    function findIssue(issues, str, matchKey, beginIndex){
+		var index = str.indexOf(matchKey, beginIndex);
+		if(index < 0){
+			return issues;
+		}
+		var issue = matchKey;
+		var i = index + matchKey.length;
+		while(true){
+			var c = str.charAt(i++);
+			if(!isNaN(c)){
+				issue = issue + c;
+			}else{
+				break;
+			}			
+		}
+		issues.push(issue);		
+		findIssue(issues, str, matchKey, index + i); 	 		
+	}
 
     Discourse.Dialect.addPreProcessor(function(text) {
-        return abbreviate(text);
+        return link_to_jira(text);
     });
 })();
