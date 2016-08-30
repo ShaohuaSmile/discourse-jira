@@ -27,7 +27,7 @@
 		while(true){
 			var c = str.charAt(i++);
 			//not a number or empty or undefined
-			if(isNaN(c) || "" == c || undefined == c){
+			if(isNaN(c) || '' == c || ' ' == c || "" == c || " " == c || undefined == c){
 				break;
 			}
 			issue = issue + c;
