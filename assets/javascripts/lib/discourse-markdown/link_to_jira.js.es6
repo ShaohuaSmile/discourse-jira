@@ -82,8 +82,6 @@ function link_to_jira(text,list) {
     });
     regexStr = regexStr.substring(0,regexStr.length - 1) ;
     return addHref(text,regexStr,keys,values);
-
-     }
 }
 export function setup(helper) {
   helper.addPreProcessor(text => {
