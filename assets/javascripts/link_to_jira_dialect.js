@@ -22,6 +22,9 @@
 		if(index < 0){
 			return issues;
 		}
+		if(index != 0 && (str.charAt(index-1) == '\/' || str.charAt(index-1) == '>')){
+			return findIssue(issues, str, matchKey, index + 1);
+		}
 		var issue = matchKey;
 		var i = index + matchKey.length;
 		while(true){
